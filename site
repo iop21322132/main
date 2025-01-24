@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анимация числа</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* Скрываем переполнение */
+        }
+
+        .button {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.1s, box-shadow 0.1s;
+            position: relative; /* Для позиционирования числа относительно кнопки */
+        }
+
+        .button:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .number {
+            position: absolute;
+            bottom: -100px; /* Начальная позиция за пределами экрана */
+            left: 50%; /* Центрируем по горизонтали */
+            transform: translateX(-50%); /* Центрируем по горизонтали */
+            font-size: 48px;
+            color: black;
+            text-align: center;
+            transition: bottom 0.3s ease; /* Ускоренная анимация */
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <button class="button" id="randomButton">Нажми!</button>
+        <div class="number" id="randomNumber"></div>
+    </div>
+
+    <script>
+        let isAnimating = false; // Флаг для предотвращения повторного нажатия
+        const button = document.getElementById('randomButton');
+        const numberElement = document.getElementById('randomNumber');
+
+        button.addEventListener('click', function() {
+            if (isAnimating) return; // Если анимация идет, ничего не делаем
+
+            isAnimating = true; // Устанавливаем флаг анимации
+            const randomNum = Math.floor(Math.random() * 20) + 1;
+            numberElement.textContent = randomNum;
+
+            // Показать число
+            numberElement.style.bottom = '70px'; // Поднимаем число к центру под кнопкой
+
+            // Через 1 секунду возвращаем число вниз
+            setTimeout(() => {
+                numberElement.style.bottom = '-100px'; // Возвращаем число вниз
+                isAnimating = false; // Сбрасываем флаг анимации
+            }, 1000); // Уменьшено время до 1 секунды
+        });
+    </script>
+
+</body>
+</html>
